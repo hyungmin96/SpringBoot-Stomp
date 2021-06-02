@@ -16,7 +16,6 @@
 
 <script>
 
-
     $('.createBtn').on("click", function(){
 
         $.ajax({
@@ -26,15 +25,15 @@
             data: 'user=123&target=1234',
             contentType: 'application/x-www-form-urlencoded',
             success: function(response){
-                $('.roomsContainer').append('<div onclick="goToUrl(' + response.roomId + ')" class="room">' + response.roomId +'</div>');
+                $('.roomsContainer').append('<div onclick="goToUrl(\'' + response.target + '\', \''+ response.roomId +'\')" class="room">' + response.roomId +'</div>');
             }
 
         })
 
     })
 
-    function goToUrl(num){
-        location.href = 'http://localhost:8000/room/' + num;
+    function goToUrl(target, roomid){
+        location.href = 'http://localhost:8000/api/target=' + target + '/chat/' + roomid;
     }
 
 </script>

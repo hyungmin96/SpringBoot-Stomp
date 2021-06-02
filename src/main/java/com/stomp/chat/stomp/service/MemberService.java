@@ -16,4 +16,8 @@ public class MemberService {
         return memberRepository.findByusername(username);
     }
 
+    public void saveObject(MemberVo memberVo){
+        memberRepository.save(memberVo);
+    }
+
 }

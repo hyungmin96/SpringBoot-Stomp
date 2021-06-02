@@ -2,6 +2,8 @@ package com.stomp.chat.stomp.controller;
 
 import com.stomp.chat.stomp.components.CheckChatRoomDuplicated;
 import com.stomp.chat.stomp.model.ChatRoomVo;
+import com.stomp.chat.stomp.model.CreateRoomResponse;
+import com.stomp.chat.stomp.service.ChatRoomJoinService;
 import com.stomp.chat.stomp.service.ChatRoomService;
 import com.stomp.chat.stomp.service.MemberService;
 
@@ -16,23 +18,31 @@ import org.springframework.web.bind.annotation.RestController;
 public class ApiController {
     
     @Autowired
-    private ChatRoomService chatRoomService;
+    private ChatRoomJoinService chatRoomJoinService;
 
     @Autowired
-    private MemberService memberService;
+    private ChatRoomService chatRooService;
+
+    @Autowired
+private MemberService memberService;
 
     // target = 채팅초대할 대상
     // user = 채팅 아이디(로그인 계정)
     @PostMapping("/create/chatroom")
-    public String createRoom(@RequestParam("user") String user, 
+    public CreateRoomResponse createRoom(@RequestParam("user") String user, 
                                 @RequestParam("target") String target){
 
         CheckChatRoomDuplicated checkChatRoomDuplicated = 
-                    new CheckChatRoomDuplicated(memberService, user, target);
+                    new CheckChatRoomDuplicated(memberService, chatRoomJoinService, 
+                                                chatRooService, user, target);
                     
-        checkChatRoomDuplicated.checkRoom();
+        Long roomNo =  checkChatRoomDuplicated.checkRoom();
 
-        return "redirect:/room/{id}";
+        CreateRoomResponse createRoomResponse = new CreateRoomResponse();
+        createRoomResponse.setUser(user);
+        createRoomResponse.setTarget(target);
+        createRoomResponse.setRoomId(roomNo);
+        return createRoomResponse;
 
     }
 

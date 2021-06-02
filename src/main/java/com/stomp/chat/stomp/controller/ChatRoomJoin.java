@@ -1,5 +1,6 @@
 package com.stomp.chat.stomp.controller;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,8 +25,11 @@ public class ChatRoomJoin {
     @JoinColumn(name = "userId")
     private MemberVo member;
 
+    @Column
+    private String target;
+
     @ManyToOne
-    @JoinColumn(name = "roodId")
+    @JoinColumn(name = "roomId")
     private ChatRoomVo chatRoomVo;
 
 }

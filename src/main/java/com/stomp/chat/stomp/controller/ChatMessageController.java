@@ -1,6 +1,7 @@
 package com.stomp.chat.stomp.controller;
 
 import com.stomp.chat.stomp.model.ChatVo;
+import com.stomp.chat.stomp.model.MessageFormat;
 import com.stomp.chat.stomp.service.ChatService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,16 +17,17 @@ public class ChatMessageController {
 
     @MessageMapping("/greeting")
     @SendTo("/sub/greetings")
-    public ChatVo enter(ChatVo chatVo){
-        chatService.saveChatContent(chatVo);
-        return chatVo;
+    public MessageFormat enter(MessageFormat message){
+        
+        //chatService.saveChatContent(chatVo);
+        return message;
     }
 
     @MessageMapping("/content")
     @SendTo("/sub/greetings")
-    public ChatVo content(ChatVo chatVo){
-        chatService.saveChatContent(chatVo);
-        return chatVo;
+    public MessageFormat content(MessageFormat message){
+        //chatService.saveChatContent(chatVo);
+        return message;
     }
 
 }

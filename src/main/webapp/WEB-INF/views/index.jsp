@@ -3,6 +3,10 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
 <div id="main-content" class="container">
+
+    <input type="hidden" class="data__roomId" data-chatroom = "${roomid}">
+    <input type="hidden" class="data__target" data-target = "${target}">
+
     <div class="row">
         <div class="col-md-6">
             <form class="form-inline">

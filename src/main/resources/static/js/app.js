@@ -4,11 +4,12 @@ function connect() {
 
     var socket = new SockJS('/ws');
     stompClient = Stomp.over(socket);
+    stompClient.debug = null;
 
     stompClient.connect({}, function (){
         stompClient.subscribe('/sub/greetings', function (message) {
             var value = JSON.parse(message.body);
-            showMessage(value.target + ' : ' + value.content);
+            showMessage(value);
         });
     });
 }
@@ -20,16 +21,23 @@ function disconnect() {
 }
 
 function sendMessage() {
-    stompClient.send('/pub/content', {}, 
-    JSON.stringify(
-        {
-            'target': $("#name").val(), 
-            'content' : $('#message').val()
-        }));
+
+    var chatRoomId = document.getElementsByClassName('data__roomId')[0];
+    var chatRoomTarget = document.getElementsByClassName('data__target')[0];
+    
+    data = {
+            'chatRoomid' : chatRoomId.dataset.chatroom, 
+            'user' : '123', 
+            'target' : chatRoomTarget.dataset.target, 
+            'message' : $("#message").val()
+            };
+
+    stompClient.send('/pub/content', {}, JSON.stringify(data));
 }
 
 function showMessage(message) {
-    $("#greetings").append("<tr><td>" + message + "</td></tr>");
+    console.log(message);
+    $("#greetings").append("<tr><td>" + message.user + ' : ' +  message.message + "</td></tr>");
 }
 
 function greeting(){
