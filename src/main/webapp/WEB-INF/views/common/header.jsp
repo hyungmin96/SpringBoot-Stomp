@@ -10,7 +10,6 @@
                 <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
                 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-                <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
                 <script src="/webjars/sockjs-client/sockjs.min.js"></script>
                 <script src="/webjars/stomp-websocket/stomp.min.js"></script>
                 <script src="/js/app.js"></script>

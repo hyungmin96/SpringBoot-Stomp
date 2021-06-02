@@ -23,4 +23,10 @@ public class SiteController {
         return "index";
     }
 
+    @GetMapping("/user/login")
+    public String login(){
+
+        return "login";
+    }
+
 }
