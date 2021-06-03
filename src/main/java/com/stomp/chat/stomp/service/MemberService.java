@@ -16,7 +16,13 @@ public class MemberService implements UserDetailsService{
     private MemberRepository memberRepository;
 
     public MemberVo findUserObject(String username){
-        return memberRepository.findByusername(username);
+
+        MemberVo memberVo = memberRepository.findByusername(username);
+
+        if(memberVo == null)
+            memberVo = new MemberVo();
+
+        return memberVo;
     }
 
     public void saveObject(MemberVo memberVo){

@@ -1,8 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ include file="/WEB-INF/views/common/header.jsp" %>
+<%@ include file="../common/header.jsp" %>
 
 <div id="main-content" class="container">
+
+    <div class="testContainer">
+        <c:forEach var="chat" items="${chats}">
+            <h1>${chat.content}</h1>
+        </c:forEach>
+    </div>
 
     <input type="hidden" class="data__roomId" data-chatroom = "${roomid}">
     <input type="hidden" class="data__target" data-target = "${target}">

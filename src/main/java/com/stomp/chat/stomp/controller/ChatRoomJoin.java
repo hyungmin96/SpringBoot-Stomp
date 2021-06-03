@@ -25,8 +25,9 @@ public class ChatRoomJoin {
     @JoinColumn(name = "userId")
     private MemberVo member;
 
-    @Column
-    private String target;
+    @ManyToOne
+    @JoinColumn(name = "targetId")
+    private MemberVo target;
 
     @ManyToOne
     @JoinColumn(name = "roomId")

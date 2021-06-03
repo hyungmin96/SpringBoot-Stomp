@@ -4,7 +4,7 @@ function connect() {
 
     var socket = new SockJS('/ws');
     stompClient = Stomp.over(socket);
-    stompClient.debug = null;
+    // stompClient.debug = null;
 
     stompClient.connect({}, function (){
         stompClient.subscribe('/sub/greetings', function (message) {
@@ -28,7 +28,6 @@ function sendMessage() {
     data = {
             'chatRoomid' : chatRoomId.dataset.chatroom, 
             'user' : '123', 
-            'target' : chatRoomTarget.dataset.target, 
             'message' : $("#message").val()
             };
 
@@ -46,6 +45,7 @@ function greeting(){
             'content' : $("#name").val() + '님이 입장하셨습니다.'
         }))
 }
+
 
 $(function () {
     $("form").on('submit', function (e) {

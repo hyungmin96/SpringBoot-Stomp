@@ -1,6 +1,8 @@
 package com.stomp.chat.stomp.components;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.stomp.chat.stomp.controller.ChatRoomJoin;
 import com.stomp.chat.stomp.model.ChatRoomVo;
@@ -11,19 +13,18 @@ import com.stomp.chat.stomp.service.MemberService;
 
 public class CheckChatRoomDuplicated {
     
-    private final MemberService memberService;
     private final ChatRoomJoinService chatRoomJoinService;
     private final ChatRoomService chatRoomService;
     
     MemberVo targetVo;
     MemberVo userVo;
+    ChatRoomJoin room = null;
 
     public CheckChatRoomDuplicated(MemberService memberService, 
                                     ChatRoomJoinService chatRoomJoinService,
                                     ChatRoomService chatRoomService,
                                     String userString, String targetString){
 
-        this.memberService = memberService;
         this.chatRoomJoinService = chatRoomJoinService;
         this.chatRoomService = chatRoomService;
 
@@ -34,27 +35,27 @@ public class CheckChatRoomDuplicated {
 
     public Long checkRoom(){
 
-        ChatRoomJoin result = chatRoomJoinService.getRooms(userVo, targetVo.getUsername());
+        Map<String, List<ChatRoomJoin>> roomList = chatRoomJoinService.getRooms(userVo, targetVo);
+            
+        List<ChatRoomJoin> targetRooms = roomList.get("target");
+        List<ChatRoomJoin> userRooms = roomList.get("user");
 
-        if(result != null)
-            return result.getChatRoomVo().getId(); //채팅방 존재
-        else
-            return createRoom(); // 채팅방 없음
+        if(room == null){
 
-    }
+            ChatRoomVo chatRoomVo = new ChatRoomVo();
+            chatRoomService.saveObject(chatRoomVo);
+    
+            ChatRoomJoin chatRoomJoin = new ChatRoomJoin();
+            chatRoomJoin.setChatRoomVo(chatRoomVo);
+            chatRoomJoin.setMember(userVo);
+            chatRoomJoin.setTarget(targetVo);
+            chatRoomJoinService.saveObject(chatRoomJoin);
+    
+            return chatRoomJoin.getChatRoomVo().getId();
 
-    public Long createRoom(){
+        }
 
-        ChatRoomVo chatRoomVo = new ChatRoomVo();
-        chatRoomService.saveObject(chatRoomVo);
-
-        ChatRoomJoin chatRoomJoin = new ChatRoomJoin();
-        chatRoomJoin.setChatRoomVo(chatRoomVo);
-        chatRoomJoin.setMember(userVo);
-        chatRoomJoin.setTarget(targetVo.getUsername());
-        chatRoomJoinService.saveObject(chatRoomJoin);
-
-        return chatRoomJoin.getChatRoomVo().getId();
+        return room.getChatRoomVo().getId();
 
     }
 

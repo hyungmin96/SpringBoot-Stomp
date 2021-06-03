@@ -15,6 +15,8 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final  String RESOURCE_ROOT = "/resources/**";
+
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/lib/**");
@@ -24,10 +26,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         
         http.csrf().disable().authorizeRequests()
-                .antMatchers("/member/**").authenticated()
-                .antMatchers("/admin/**").authenticated()
-                .antMatchers("/**").permitAll();
-
+            .antMatchers("/user/login", RESOURCE_ROOT).permitAll()
+            .antMatchers("/sub/**", "/pub/**").authenticated()
+            .anyRequest().authenticated();
+            
         http.formLogin()
             .loginPage("/user/login")
             .loginProcessingUrl("/api/login")
@@ -43,11 +45,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
     
-    // @Override
-    // protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-    //     auth.userDetailsService(MemberService).passwordEncoder(BcyptPasswordEncoder());
-    // }
-
     @Bean
     public BCryptPasswordEncoder BcyptPasswordEncoder(){
         return new BCryptPasswordEncoder();

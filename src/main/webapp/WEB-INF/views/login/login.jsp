@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ include file="common/header.jsp" %>
+<%@ include file="../common/header.jsp"%>
 
 <div class="login__wrapper" style="margin-top: 175px; height: 625px;">
     <div class="container">
@@ -33,10 +33,7 @@
                         </div>
 
                         <div class="sns__login_container">
-                            <a href="#"><img src="/images/login/naverlogin.png"></a>
-                            <a href="#"><img src="/images/login/kakao.png"></a>
-                            <a href="#"><img src="/images/login/google.png"></a>
-                            <a href="#"><img src="/images/login/daum.png"></a>
+                          
                         </div>
                     </div>
         </div>

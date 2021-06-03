@@ -23,7 +23,7 @@ public class ApiController {
     private ChatRoomJoinService chatRoomJoinService;
 
     @Autowired
-    private ChatRoomService chatRooService;
+    private ChatRoomService chatRoomService;
 
     @Autowired
     private MemberService memberService;
@@ -36,7 +36,7 @@ public class ApiController {
 
         CheckChatRoomDuplicated checkChatRoomDuplicated = 
                     new CheckChatRoomDuplicated(memberService, chatRoomJoinService, 
-                                                chatRooService, user, target);
+                                                chatRoomService, user, target);
                     
         Long roomNo =  checkChatRoomDuplicated.checkRoom();
 
@@ -44,6 +44,7 @@ public class ApiController {
         createRoomResponse.setUser(user);
         createRoomResponse.setTarget(target);
         createRoomResponse.setRoomId(roomNo);
+        
         return createRoomResponse;
 
     }
