@@ -15,7 +15,6 @@ public class CheckChatRoomDuplicated {
     
     private final ChatRoomJoinService chatRoomJoinService;
     private final ChatRoomService chatRoomService;
-    private final MemberService memberService;
     
     MemberVo targetVo = null;
     MemberVo userVo = null;
@@ -26,7 +25,6 @@ public class CheckChatRoomDuplicated {
                                     ChatRoomService chatRoomService,
                                     String userString, String targetString){
 
-        this.memberService = memberService;
         this.chatRoomJoinService = chatRoomJoinService;
         this.chatRoomService = chatRoomService;
 
@@ -38,29 +36,34 @@ public class CheckChatRoomDuplicated {
     public Long checkRoom(){
 
         if (targetVo.getId() != null) {
-            Map<String, List<ChatRoomJoin>> roomList = chatRoomJoinService.getRooms(userVo, targetVo);
 
-            List<ChatRoomJoin> targetRooms = roomList.get("target");
-            List<ChatRoomJoin> userRooms = roomList.get("user");
+            List<ChatRoomJoin> rooms = chatRoomJoinService.getRooms(userVo);
 
-        if(room == null){
+            for (ChatRoomJoin item : rooms) {
+                if (item.getTarget().equals(targetVo) || item.getMember().equals(targetVo)) {
+                    room = item;
+                    break;
+                }
+            }
 
-            ChatRoomVo chatRoomVo = new ChatRoomVo();
-            chatRoomService.saveObject(chatRoomVo);
-    
-            ChatRoomJoin chatRoomJoin = new ChatRoomJoin();
-            chatRoomJoin.setChatRoomVo(chatRoomVo);
-            chatRoomJoin.setMember(userVo);
-            chatRoomJoin.setTarget(targetVo);
-            chatRoomJoinService.saveObject(chatRoomJoin);
-    
-            return chatRoomJoin.getChatRoomVo().getId();
+            if (room == null) {
+
+                ChatRoomVo chatRoomVo = new ChatRoomVo();
+                chatRoomService.saveObject(chatRoomVo);
+
+                room = new ChatRoomJoin();
+                room.setChatRoomVo(chatRoomVo);
+                room.setMember(userVo);
+                room.setTarget(targetVo);
+                chatRoomJoinService.saveObject(room);
+
+            }
 
         }
 
-        return room.getChatRoomVo().getId();
-
-        }else
+        if(room != null)
+            return room.getChatRoomVo().getId();
+        else
             return 0L;
 
     }

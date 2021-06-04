@@ -1,8 +1,8 @@
 package com.stomp.chat.stomp.service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.stomp.chat.stomp.controller.ChatRoomJoin;
 import com.stomp.chat.stomp.model.MemberVo;
@@ -19,14 +19,18 @@ public class ChatRoomJoinService{
     
     ChatRoomJoin room = null;
     
-    public Map<String, List<ChatRoomJoin>> getRooms(MemberVo user, MemberVo target){
+    public List<ChatRoomJoin> getRooms(MemberVo user){
         
-        Map<String, List<ChatRoomJoin>> hashmap = new HashMap<String, List<ChatRoomJoin>>();
+        // user가 target으로 되어있는 리스트 추출
+        List<ChatRoomJoin> targetRooms = chatRoomJoinRepository.findAllBytarget(user);
+
+        // user가 target으로 되어있는 리스트 추출
+        List<ChatRoomJoin> userRooms = chatRoomJoinRepository.findAllBymember(user);
         
-        hashmap.put("target", chatRoomJoinRepository.findAllBytarget(target));
-        hashmap.put("user", chatRoomJoinRepository.findAllBymember(user));
-        
-        return hashmap;
+        List<ChatRoomJoin> Rooms = Stream.concat(targetRooms.stream(),
+                                    userRooms.stream()).collect(Collectors.toList());
+
+        return Rooms;
     }
 
     public void saveObject(ChatRoomJoin chatRoomJoin){

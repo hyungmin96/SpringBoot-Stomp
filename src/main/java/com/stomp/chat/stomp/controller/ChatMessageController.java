@@ -57,9 +57,8 @@ public class ChatMessageController {
         simpMessagingTemplate.convertAndSend("/queue/websocket/" + roomId, message);
     }
 
-    @MessageMapping("/chat/notification")
-    public void notification(@Payload notificationDTO notification){
-        simpMessagingTemplate.convertAndSend("/queue/notification/", notification);
+    public void notification(String target, notificationDTO notification){
+        simpMessagingTemplate.convertAndSend("/queue/notification/" + target, notification);
     }
 
 }

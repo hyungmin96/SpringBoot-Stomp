@@ -8,8 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ChatRoomJoinRepository extends JpaRepository<ChatRoomJoin, Long>{
 
-    public List<ChatRoomJoin> findAllBytarget(MemberVo target);
+    public List<ChatRoomJoin> findAllBytarget(MemberVo user);
     public List<ChatRoomJoin> findAllBymember(MemberVo user);
-
 
 }

@@ -14,21 +14,30 @@ function showMessage(message) {
 }
 
 function connect() {
+
+    var user = $(('.user__name__info')).text();
+
     var socket = new SockJS('/ws');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (){
-        stompClient.subscribe('/queue/notification/', function (message) {
+        console.log(user);
+        stompClient.subscribe('/queue/notification/' + user, function (message) {
             var value = JSON.parse(message.body);
             showMessage(value);
         });
     });
 }
 
-function sendNotification() {
+function sendNotification(response) {
+    console.log(response);
     data = {
-            'notificationType' : 'chat', 
-            'message' : '1:1 대화요청이 왔습니다.'
+            'resultCreate' : response.createResult,
+            'notificationType' : response.notificationType,
+            'roomId' : response.roomId,
+            'user' : response.user,
+            'target' : response.target,
+            'message' : response.message
             };
 
-    stompClient.send('/app/chat/notification', {}, JSON.stringify(data));
+    stompClient.send('/app/chat/notification/' + data.target, {}, JSON.stringify(data));
 }

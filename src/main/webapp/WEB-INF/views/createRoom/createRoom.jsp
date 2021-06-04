@@ -34,7 +34,7 @@
             data: 'user=' + user + '&target=' + target ,
             contentType: 'application/x-www-form-urlencoded',
             success: function(response){
-                sendNotification();
+                sendNotification(response);
             }
         })
     })

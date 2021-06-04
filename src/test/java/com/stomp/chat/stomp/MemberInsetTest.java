@@ -23,9 +23,9 @@ public class MemberInsetTest {
     void 멤버_회원가입_테스트(){
 
         MemberVo memberVo = MemberVo.builder()
-                            .username("1")
-                            .password(new BCryptPasswordEncoder().encode("1"))
-                            .name("11").build();
+                            .username("12345")
+                            .password(new BCryptPasswordEncoder().encode("12345"))
+                            .name("12345").build();
 
         memberSerivce.saveObject(memberVo);
 

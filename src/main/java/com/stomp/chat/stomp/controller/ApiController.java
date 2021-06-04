@@ -1,7 +1,7 @@
 package com.stomp.chat.stomp.controller;
 
 import com.stomp.chat.stomp.components.CheckChatRoomDuplicated;
-import com.stomp.chat.stomp.model.CreateRoomResponse;
+import com.stomp.chat.stomp.dto.notificationDTO;
 import com.stomp.chat.stomp.model.MemberVo;
 import com.stomp.chat.stomp.service.ChatRoomJoinService;
 import com.stomp.chat.stomp.service.ChatRoomService;
@@ -31,10 +31,8 @@ public class ApiController {
     @Autowired
     private ChatMessageController chatMessageController;
 
-    // target = 채팅초대할 대상
-    // user = 채팅 아이디(로그인 계정)
     @PostMapping("/create/chatroom")
-    public CreateRoomResponse createRoom(@RequestParam("user") String user, 
+    public notificationDTO createRoom(@RequestParam("user") String user, 
                                 @RequestParam("target") String target){
 
         CheckChatRoomDuplicated checkChatRoomDuplicated = 
@@ -43,14 +41,22 @@ public class ApiController {
                     
         Long roomNo =  checkChatRoomDuplicated.checkRoom();
 
-        CreateRoomResponse createRoomResponse = new CreateRoomResponse();
+        notificationDTO createRoomResponse = new notificationDTO();
         
         if (roomNo != 0L) {
+            createRoomResponse.setCreateResult(true);
             createRoomResponse.setUser(user);
             createRoomResponse.setTarget(target);
             createRoomResponse.setRoomId(roomNo);
+            
+            notificationDTO notification = new notificationDTO();
+            notification.setNotificationType("chat");
+            notification.setMessage("1:1 대화요청");
+            chatMessageController.notification(target, notification);
+        }else{
+            createRoomResponse.setCreateResult(false);
         }
-
+            
         return createRoomResponse;
     }
 
