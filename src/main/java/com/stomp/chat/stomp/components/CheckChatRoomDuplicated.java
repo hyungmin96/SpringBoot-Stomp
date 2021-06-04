@@ -15,9 +15,10 @@ public class CheckChatRoomDuplicated {
     
     private final ChatRoomJoinService chatRoomJoinService;
     private final ChatRoomService chatRoomService;
+    private final MemberService memberService;
     
-    MemberVo targetVo;
-    MemberVo userVo;
+    MemberVo targetVo = null;
+    MemberVo userVo = null;
     ChatRoomJoin room = null;
 
     public CheckChatRoomDuplicated(MemberService memberService, 
@@ -25,6 +26,7 @@ public class CheckChatRoomDuplicated {
                                     ChatRoomService chatRoomService,
                                     String userString, String targetString){
 
+        this.memberService = memberService;
         this.chatRoomJoinService = chatRoomJoinService;
         this.chatRoomService = chatRoomService;
 
@@ -35,10 +37,11 @@ public class CheckChatRoomDuplicated {
 
     public Long checkRoom(){
 
-        Map<String, List<ChatRoomJoin>> roomList = chatRoomJoinService.getRooms(userVo, targetVo);
-            
-        List<ChatRoomJoin> targetRooms = roomList.get("target");
-        List<ChatRoomJoin> userRooms = roomList.get("user");
+        if (targetVo.getId() != null) {
+            Map<String, List<ChatRoomJoin>> roomList = chatRoomJoinService.getRooms(userVo, targetVo);
+
+            List<ChatRoomJoin> targetRooms = roomList.get("target");
+            List<ChatRoomJoin> userRooms = roomList.get("user");
 
         if(room == null){
 
@@ -56,6 +59,9 @@ public class CheckChatRoomDuplicated {
         }
 
         return room.getChatRoomVo().getId();
+
+        }else
+            return 0L;
 
     }
 

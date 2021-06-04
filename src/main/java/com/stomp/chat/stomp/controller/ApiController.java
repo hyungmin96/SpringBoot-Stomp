@@ -41,12 +41,14 @@ public class ApiController {
         Long roomNo =  checkChatRoomDuplicated.checkRoom();
 
         CreateRoomResponse createRoomResponse = new CreateRoomResponse();
-        createRoomResponse.setUser(user);
-        createRoomResponse.setTarget(target);
-        createRoomResponse.setRoomId(roomNo);
         
-        return createRoomResponse;
+        if (roomNo != 0L) {
+            createRoomResponse.setUser(user);
+            createRoomResponse.setTarget(target);
+            createRoomResponse.setRoomId(roomNo);
+        }
 
+        return createRoomResponse;
     }
 
     @PostMapping("/login")

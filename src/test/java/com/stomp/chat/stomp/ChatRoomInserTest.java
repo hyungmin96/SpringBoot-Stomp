@@ -48,7 +48,7 @@ public class ChatRoomInserTest {
         ChatRoomJoin chatRoomJoin = new ChatRoomJoin();
         chatRoomJoin.setChatRoomVo(chatRoomVo);
         chatRoomJoin.setMember(userVo);
-        chatRoomJoin.setTarget(targetVo.getUsername());
+        chatRoomJoin.setTarget(targetVo);
         chatRoomJoinService.saveObject(chatRoomJoin);
 
     }
@@ -56,17 +56,17 @@ public class ChatRoomInserTest {
     @Test
     void 개설채팅방_연결(){
 
-        String targetString = "123";
-        String userString = "1234";
+        // String targetString = "123";
+        // String userString = "1234";
 
-        MemberVo userVo = memberService.findUserObject(userString);
+        // MemberVo userVo = memberService.findUserObject(userString);
 
-        ChatRoomJoin result = chatRoomJoinService.getRooms(userVo, targetString);
+        // ChatRoomJoin result = chatRoomJoinService.getRooms(userVo, targetString);
 
-        if(result != null)
-            System.out.println(result.getTarget() + "/" + result.getId() + "번 채팅방이 생성됨");
-        else
-            System.out.println("채팅방 개설 실패");
+        // if(result != null)
+        //     System.out.println(result.getTarget() + "/" + result.getId() + "번 채팅방이 생성됨");
+        // else
+        //     System.out.println("채팅방 개설 실패");
     }
 
     @Test

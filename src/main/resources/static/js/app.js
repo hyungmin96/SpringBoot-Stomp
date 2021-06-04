@@ -1,13 +1,11 @@
 var stompClient = null;
 
 function connect() {
-
     var socket = new SockJS('/ws');
     stompClient = Stomp.over(socket);
-    // stompClient.debug = null;
-
+    stompClient.debug = null;
     stompClient.connect({}, function (){
-        stompClient.subscribe('/sub/greetings', function (message) {
+        stompClient.subscribe('/topic/chat/' + document.getElementsByClassName('data__roomId')[0].dataset.chatroom, function (message) {
             var value = JSON.parse(message.body);
             showMessage(value);
         });
@@ -22,30 +20,19 @@ function disconnect() {
 
 function sendMessage() {
 
-    var chatRoomId = document.getElementsByClassName('data__roomId')[0];
-    var chatRoomTarget = document.getElementsByClassName('data__target')[0];
-    
     data = {
-            'chatRoomid' : chatRoomId.dataset.chatroom, 
+            'chatRoomid' : document.getElementsByClassName('data__roomId')[0].dataset.chatroom, 
             'user' : '123', 
             'message' : $("#message").val()
             };
 
-    stompClient.send('/pub/content', {}, JSON.stringify(data));
+    stompClient.send('/app/content', {}, JSON.stringify(data));
 }
 
 function showMessage(message) {
     console.log(message);
     $("#greetings").append("<tr><td>" + message.user + ' : ' +  message.message + "</td></tr>");
 }
-
-function greeting(){
-    stompClient.send('/pub/greeting', {}, JSON.stringify(
-        {
-            'content' : $("#name").val() + '님이 입장하셨습니다.'
-        }))
-}
-
 
 $(function () {
     $("form").on('submit', function (e) {
