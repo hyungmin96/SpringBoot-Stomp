@@ -3,7 +3,7 @@ var stompClient = null;
 function connect() {
     var socket = new SockJS('/ws');
     stompClient = Stomp.over(socket);
-    stompClient.debug = null;
+    // stompClient.debug = null;
     stompClient.connect({}, function (){
         stompClient.subscribe('/topic/chat/' + document.getElementsByClassName('data__roomId')[0].dataset.chatroom, function (message) {
             var value = JSON.parse(message.body);
@@ -22,7 +22,7 @@ function sendMessage() {
 
     data = {
             'chatRoomid' : document.getElementsByClassName('data__roomId')[0].dataset.chatroom, 
-            'user' : '123', 
+            'user' : '', 
             'message' : $("#message").val()
             };
 

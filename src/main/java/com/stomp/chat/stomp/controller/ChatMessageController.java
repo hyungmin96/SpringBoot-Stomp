@@ -1,5 +1,6 @@
 package com.stomp.chat.stomp.controller;
 
+import java.security.Principal;
 import java.util.Date;
 
 import com.stomp.chat.stomp.model.ChatVo;
@@ -32,8 +33,10 @@ public class ChatMessageController {
     
     @MessageMapping("/content")
     @SendTo("/topic/chat")
-    public MessageFormat content(@Payload MessageFormat message){
-    
+    public MessageFormat content(Principal principal, @Payload MessageFormat message){
+
+        message.setUser(principal.getName());
+
         ChatVo chatVo = ChatVo.builder()
                                 .content(message.getMessage())
                                 .chatRoomVo(chatRoomRepository.getById(message.getChatRoomid()))

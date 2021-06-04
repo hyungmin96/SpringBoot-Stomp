@@ -25,18 +25,13 @@
             </form>
         </div>
         <div class="col-md-6">
-            <form class="form-inline">
-                    <label for="name">What is your name?</label>
-                    <input type="text" id="name" class="form-control" placeholder="Your name here...">
-                </div>
 
-                <div class="form-group">
-                    <label for="name">What is your message?</label>
-                    <input type="text" id="message" class="form-control" placeholder="Your message here...">
-                </div>
-                <button id="send" class="btn btn-default" type="submit">Send</button>
+            <div class="form-group">
+                <label for="name">What is your message?</label>
+                <input type="text" id="message" class="form-control" placeholder="Your message here...">
+            </div>
+            <button id="send" class="btn btn-default" type="submit">Send</button>
 
-            </form>
         </div>
     </div>
     <div class="row">
@@ -44,7 +39,7 @@
             <table id="conversation" class="table table-striped">
                 <thead>
                 <tr>
-                    <th>Greetings</th>
+                    <th>채팅내용</th>
                 </tr>
                 </thead>
                 <tbody id="greetings">
