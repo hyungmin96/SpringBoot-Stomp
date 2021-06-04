@@ -1,13 +1,12 @@
-package com.stomp.chat.stomp.model;
+package com.stomp.chat.stomp.dto;
 
 import lombok.Data;
 
 @Data
-public class MessageFormat {
+public class MessageFormatDTO {
     
     private Long chatRoomid;
     private String user;
-    private String target;
     private String message;
 
 }

@@ -28,6 +28,9 @@ public class ApiController {
     @Autowired
     private MemberService memberService;
 
+    @Autowired
+    private ChatMessageController chatMessageController;
+
     // target = 채팅초대할 대상
     // user = 채팅 아이디(로그인 계정)
     @PostMapping("/create/chatroom")

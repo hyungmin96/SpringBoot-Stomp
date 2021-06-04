@@ -25,12 +25,17 @@
             </form>
         </div>
         <div class="col-md-6">
-
             <div class="form-group">
                 <label for="name">What is your message?</label>
                 <input type="text" id="message" class="form-control" placeholder="Your message here...">
             </div>
             <button id="send" class="btn btn-default" type="submit">Send</button>
+
+            <div class="form-group">
+                <label for="name">What is your message?</label>
+                <input type="text" id="notification__text" class="form-control" placeholder="Your message here...">
+            </div>
+            <button id="notification" class="btn btn-default" type="submit">notification</button>
 
         </div>
     </div>
@@ -50,3 +55,5 @@
 </div>
 
 </body>
+<script src="/js/app.js"></script>
+
