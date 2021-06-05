@@ -74,8 +74,8 @@ function loadChatData(){
                 // 상대 사용자가 보낸 채팅
                     $(".chat__list").prepend(
                         "<div class='target__send'>" + 
-                            "<div class='nickname'>" + value.member.username + "</div>" +
-                            "<div class='chat__message'>" + value.content + "</div>" +
+                            "<span class='nickname'>" + value.member.username + "</span>" +
+                            "<span class='chat__message'>" + value.content + "</span>" +
                         "</div>"
                     );
             })

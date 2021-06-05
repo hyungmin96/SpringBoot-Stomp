@@ -27,8 +27,8 @@ function showMessage(message) {
         // 상대 사용자가 보낸 채팅
         $(".chat__list").append(
             "<div class='target__send'>" + 
-                "<div class='nickname'>" + message.user + "</div>" +
-                "<div class='chat__message'>" + message.message + "</div>" +
+                "<span class='nickname'>" + message.user + "</span>" +
+                "<span class='chat__message'>" + message.message + "</span>" +
             "</div>"
         );
 

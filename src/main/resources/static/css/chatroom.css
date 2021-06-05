@@ -95,6 +95,7 @@ ul{
     display: flex;
     flex-direction: column;
     max-width: 180px;
+    margin-right: auto;
     word-break: break-all;
 }
 
