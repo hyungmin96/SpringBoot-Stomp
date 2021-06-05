@@ -7,6 +7,7 @@ public class MessageFormatDTO {
     
     private Long chatRoomid;
     private String user;
+    private String sender;
     private String message;
 
 }

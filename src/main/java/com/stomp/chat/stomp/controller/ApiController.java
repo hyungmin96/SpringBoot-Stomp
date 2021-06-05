@@ -45,14 +45,13 @@ public class ApiController {
         
         if (roomNo != 0L) {
             createRoomResponse.setCreateResult(true);
-            createRoomResponse.setUser(user);
-            createRoomResponse.setTarget(target);
+            createRoomResponse.setMessage("1:1 대화알림이 도착하였습니다.");
+            createRoomResponse.setNotificationType("chat");
             createRoomResponse.setRoomId(roomNo);
-            
-            notificationDTO notification = new notificationDTO();
-            notification.setNotificationType("chat");
-            notification.setMessage("1:1 대화요청");
-            chatMessageController.notification(target, notification);
+            createRoomResponse.setTarget(target);
+            createRoomResponse.setUser(user);
+
+            chatMessageController.notification(target, createRoomResponse);
         }else{
             createRoomResponse.setCreateResult(false);
         }

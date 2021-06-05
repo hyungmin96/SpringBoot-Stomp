@@ -1,0 +1,113 @@
+@import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+.notosanskr * { 
+ font-family: 'Noto Sans KR', sans-serif;
+}
+
+@font-face {
+    font-family: 'ChosunBg';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@1.0/ChosunBg.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'SEBANG_Gothic_Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2104@1.0/SEBANG_Gothic_Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.target__text{
+    margin: 15px auto;
+}
+
+.data__tatgetId{
+    font-family: Noto Sans KR;
+    font-size: 18px;
+    font-weight: bold;
+    height: 100%;
+}
+.chat_wrapper{
+    display: flex; 
+    flex-direction: column;
+}
+
+::-webkit-scrollbar{
+    width: 5px;
+    background-color: #ececec;
+}
+
+::-webkit-scrollbar-thumb{
+    border-radius: 3px;
+    background-color: rgb(124, 124, 124);
+}
+
+.chat__log{
+    background-color: rgb(244, 244, 250);
+    width: 100%;
+    height: 590px;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+}
+
+ul{
+    list-style: none;
+    padding: 10px;
+}
+
+.nickname{
+    font-family: ChosunBg;
+    font-size: 13px;
+    margin-bottom: 5px;
+}
+
+.chat__message{
+    font-family: SEBANG_Gothic_Regular;
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+.user__send{
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}
+
+.user__send .chat__message{
+    padding: 7px;
+    background-color: rgb(148, 194, 235);
+    word-break: break-all;
+    margin-left: auto;
+    max-width: 180px;
+}
+
+.target__send{
+    display:inline-block;
+}
+
+.target__send .chat__message{
+    padding: 7px;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    flex-direction: column;
+    max-width: 180px;
+    word-break: break-all;
+}
+
+.chat__send{
+    padding: 10px;
+}
+
+.message__container{
+    margin: 15px 5px;
+    width: 100%;
+}
+
+.chat__content__send{
+    border: 1px solid rgb(245, 245, 245);
+    background-color: rgb(244, 244, 250);
+    border-radius: 3px;
+    padding: 10px;
+    width: 100%;
+    height: 30px;
+}

@@ -10,5 +10,6 @@ public interface ChatRoomJoinRepository extends JpaRepository<ChatRoomJoin, Long
 
     public List<ChatRoomJoin> findAllBytarget(MemberVo user);
     public List<ChatRoomJoin> findAllBymember(MemberVo user);
+    public List<ChatRoomJoin> findAllBymemberOrTarget(MemberVo user1, MemberVo user2);
 
 }

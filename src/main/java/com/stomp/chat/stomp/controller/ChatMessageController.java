@@ -44,17 +44,13 @@ public class ChatMessageController {
                                 .member(memberRepository.findByusername(message.getUser()))
                                 .build();
 
-        // chatService.saveChatContent(chatVo);
+        chatService.saveChatContent(chatVo);
 
-        simpMessagingTemplate.convertAndSend("/queue/websocket/" + message.getChatRoomid(), message);
+        simpMessagingTemplate.convertAndSend("/queue/websocket/" + message.getChatRoomid(),
+                                            message);
 
         return message;
 
-    }
-
-    @MessageMapping("/create/chat/{roomId}")
-    public void createRoom(@DestinationVariable String roomId, @Payload MessageFormatDTO message){
-        simpMessagingTemplate.convertAndSend("/queue/websocket/" + roomId, message);
     }
 
     public void notification(String target, notificationDTO notification){
