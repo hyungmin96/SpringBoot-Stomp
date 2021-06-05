@@ -9,22 +9,31 @@ window.onbeforeunload = function () {
 };
 
 $(function () {
-    $( ".chat__content__send" ).keyup(function(event) { if (event.keyCode === 13) sendMessage(); });
+    $( ".chat__content__send" ).keyup(function(event) {
+            if (event.keyCode === 13) sendMessage();
+        });
     $( "#notification" ).click(function() { sendNotification(); });
 });
 
 function showMessage(message) {
     if($('.room__targetId').text() != message.user)
         // 로그인한 사용자가 보낸 채팅
-        $(".user__send").append(
-            "<span class='chat__message'>" + message.message + "</span>"
+        $(".chat__list").append(
+            "<div class='user__send'>" + 
+            "<span class='chat__message'>" + message.message + "</span>" + 
+            "</div>"
         );
     else
         // 상대 사용자가 보낸 채팅
-        $(".target__send").append(
-            "<span class='nickname'>" + message.user + "</span>" +
-            "<span class='chat__message'>" + message.message + "</span>"
+        $(".chat__list").append(
+            "<div class='target__send'>" + 
+                "<div class='nickname'>" + message.user + "</div>" +
+                "<div class='chat__message'>" + message.message + "</div>" +
+            "</div>"
         );
+
+        $('.chat__log')[0].scrollTop = $('.chat__log')[0].scrollHeight;
+
 }
 
 function connect() {
@@ -48,4 +57,7 @@ function sendMessage() {
             };
 
     stompClient.send('/app/send/chat', {}, JSON.stringify(data));
+    $("#message").empty();
+    document.getElementById('message').value = '';
+    $('.chat__log')[0].scrollTop = $('.chat__log')[0].scrollHeight;
 }

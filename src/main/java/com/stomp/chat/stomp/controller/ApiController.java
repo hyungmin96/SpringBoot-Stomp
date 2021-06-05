@@ -1,14 +1,20 @@
 package com.stomp.chat.stomp.controller;
 
+import java.util.List;
+
 import com.stomp.chat.stomp.components.CheckChatRoomDuplicated;
 import com.stomp.chat.stomp.dto.notificationDTO;
+import com.stomp.chat.stomp.model.ChatVo;
 import com.stomp.chat.stomp.model.MemberVo;
 import com.stomp.chat.stomp.service.ChatRoomJoinService;
 import com.stomp.chat.stomp.service.ChatRoomService;
+import com.stomp.chat.stomp.service.ChatService;
 import com.stomp.chat.stomp.service.MemberService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,23 +26,32 @@ import org.springframework.web.bind.annotation.RestController;
 public class ApiController {
     
     @Autowired
-    private ChatRoomJoinService chatRoomJoinService;
-
-    @Autowired
-    private ChatRoomService chatRoomService;
-
-    @Autowired
     private MemberService memberService;
 
     @Autowired
     private ChatMessageController chatMessageController;
+
+    @Autowired
+    private ChatRoomJoinService chatRoomJoinService;
+
+    @Autowired
+    private ChatRoomService chatRoomService;
+    
+    @Autowired
+    private ChatService chatService;
+    
+    @GetMapping("/chat/chats/")
+    public Page<ChatVo> getChatList(@RequestParam Long roomId, @RequestParam int display, @RequestParam int page){
+        Page<ChatVo> chatList = chatService.getChatContent(page, display, roomId);
+        return chatList;
+    }
 
     @PostMapping("/create/chatroom")
     public notificationDTO createRoom(@RequestParam("user") String user, 
                                 @RequestParam("target") String target){
 
         CheckChatRoomDuplicated checkChatRoomDuplicated = 
-                    new CheckChatRoomDuplicated(memberService, chatRoomJoinService, 
+                    new CheckChatRoomDuplicated(memberService, chatRoomJoinService,
                                                 chatRoomService, user, target);
                     
         Long roomNo =  checkChatRoomDuplicated.checkRoom();

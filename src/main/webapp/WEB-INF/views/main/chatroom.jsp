@@ -14,26 +14,81 @@
 
         <div class="chat__log">
             <ul>
-            <c:forEach var="chat" items="${chats}">
                 <div class="message__container">
                     <li class="chat__list">
-                    
-                        <div class="user__send">
-                        </div>
 
-                        <span class="target__send">
-                        </span>
 
                     </li>
                 </div>
-            </c:forEach>
             </ul>
         </div>
 
     <div class="chat__send">
-        <input type="text" id="message" placeholder="내용을 입력해주세요" class="chat__content__send">
+        <input type="text" id="message" placeholder="내용을 입력해주세요" class="chat__content__send" value="">
     </div>
 
 </div>
 
 <script src="/js/app.js"></script>
+<script>
+
+var flag = false;
+var page = 0;
+
+$(document).ready(function(){
+    loadChatData();
+})
+
+$('.chat__log').scroll(function(){
+    if($('.chat__log').scrollTop() < 1){
+        if(!flag){
+            flag = true;
+            loadChatData();
+        }
+    }
+});
+
+function loadChatData(){
+    
+    var display = 20;
+    var roomId = $('.data__roomId')[0].dataset.chatroom;
+
+    $.ajax({
+        url: '/api/chat/chats/',
+        type: 'GET',
+        data: {roomId: roomId, display: display, page: page},
+        dataType: 'json',
+        success: function(response){
+            
+            let currentScrollTop = $('.chat__log')[0].scrollHeight;
+
+            $.each(response.content, function(key, value){
+                if($('.room__targetId').text() != value.member.username)
+                // 로그인한 사용자가 보낸 채팅
+                    $(".chat__list").prepend(
+                        "<div class='user__send'>" + 
+                        "<span class='chat__message'>" + value.content + "</span>" + 
+                        "</div>"
+                    );
+                else
+                // 상대 사용자가 보낸 채팅
+                    $(".chat__list").prepend(
+                        "<div class='target__send'>" + 
+                            "<div class='nickname'>" + value.member.username + "</div>" +
+                            "<div class='chat__message'>" + value.content + "</div>" +
+                        "</div>"
+                    );
+            })
+
+            let atferScrollTop = $('.chat__log')[0].scrollHeight;
+
+            $('.chat__log')[0].scrollTop = atferScrollTop - currentScrollTop;
+
+            page++;
+            flag = false;
+        }
+    
+    })
+}
+
+</script>

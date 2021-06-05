@@ -57,32 +57,36 @@ ul{
 
 .nickname{
     font-family: ChosunBg;
-    font-size: 13px;
-    margin-bottom: 5px;
+    font-size: 15px;
+    margin-top: 5px;
 }
 
 .chat__message{
     font-family: SEBANG_Gothic_Regular;
-    font-size: 11px;
+    font-size: 13px;
     letter-spacing: 1px;
+    margin: 5px;
 }
 
 .user__send{
     display: flex;
     flex-direction: column;
-    justify-content: end;
 }
 
 .user__send .chat__message{
     padding: 7px;
     background-color: rgb(148, 194, 235);
-    word-break: break-all;
-    margin-left: auto;
+    display: flex;
+    flex-direction: column;
     max-width: 180px;
+    margin-left: auto;
+    word-break: break-all;
 }
 
 .target__send{
-    display:inline-block;
+    display: flex;
+    flex-direction: column;
+
 }
 
 .target__send .chat__message{

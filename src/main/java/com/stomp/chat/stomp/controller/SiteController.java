@@ -19,9 +19,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class SiteController {
     
     @Autowired
-    private ChatService chatService;
-
-    @Autowired
     private ChatRoomJoinService chatRoomJoinService;
 
     @GetMapping("/")
@@ -50,12 +47,9 @@ public class SiteController {
 
     @GetMapping("/api/chat/target={target}/room={roomid}")
     public String connectRoom(Model model, @PathVariable long roomid, @PathVariable String target){
-        
-        List<ChatVo> chats = chatService.getChatContent(roomid);
 
         model.addAttribute("roomid", roomid);
         model.addAttribute("target", target);
-        model.addAttribute("chats", chats);
 
         return "/main/chatroom";
     }

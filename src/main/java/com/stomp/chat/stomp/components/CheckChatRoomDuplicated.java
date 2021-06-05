@@ -1,9 +1,8 @@
 package com.stomp.chat.stomp.components;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import com.stomp.chat.stomp.controller.ChatMessageController;
 import com.stomp.chat.stomp.controller.ChatRoomJoin;
 import com.stomp.chat.stomp.model.ChatRoomVo;
 import com.stomp.chat.stomp.model.MemberVo;
@@ -13,14 +12,14 @@ import com.stomp.chat.stomp.service.MemberService;
 
 public class CheckChatRoomDuplicated {
     
-    private final ChatRoomJoinService chatRoomJoinService;
-    private final ChatRoomService chatRoomService;
-    
+    ChatRoomJoinService chatRoomJoinService;
+    ChatRoomService chatRoomService;
+
     MemberVo targetVo = null;
     MemberVo userVo = null;
     ChatRoomJoin room = null;
 
-    public CheckChatRoomDuplicated(MemberService memberService, 
+    public CheckChatRoomDuplicated(MemberService memberService,
                                     ChatRoomJoinService chatRoomJoinService,
                                     ChatRoomService chatRoomService,
                                     String userString, String targetString){
