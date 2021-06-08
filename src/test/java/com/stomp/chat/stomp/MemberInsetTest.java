@@ -22,13 +22,13 @@ public class MemberInsetTest {
     @Test
     void 멤버_회원가입_테스트(){
 
-        MemberVo memberVo = MemberVo.builder()
-                            .username("12345")
-                            .password(new BCryptPasswordEncoder().encode("12345"))
-                            .name("12345").build();
+        for(int i = 0; i < 30; i ++){
+            MemberVo memberVo = MemberVo.builder()
+                                .username(String.valueOf(i))
+                                .password(new BCryptPasswordEncoder().encode(String.valueOf(i)))
+                                .name(String.valueOf(i)).build();
 
-        memberSerivce.saveObject(memberVo);
-
+            memberSerivce.saveObject(memberVo);
+        }
     }
-
 }

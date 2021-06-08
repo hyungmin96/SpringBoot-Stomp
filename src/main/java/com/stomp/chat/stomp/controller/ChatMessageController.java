@@ -2,7 +2,6 @@ package com.stomp.chat.stomp.controller;
 
 import java.security.Principal;
 
-import com.stomp.chat.stomp.dto.ChatRoomDTO;
 import com.stomp.chat.stomp.dto.MessageFormatDTO;
 import com.stomp.chat.stomp.dto.notificationDTO;
 import com.stomp.chat.stomp.model.ChatVo;
@@ -11,10 +10,8 @@ import com.stomp.chat.stomp.repository.MemberRepository;
 import com.stomp.chat.stomp.service.ChatService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
@@ -45,10 +42,7 @@ public class ChatMessageController {
                                 .build();
 
         chatService.saveChatContent(chatVo);
-
-        simpMessagingTemplate.convertAndSend("/queue/websocket/" + message.getChatRoomid(),
-                                            message);
-
+        simpMessagingTemplate.convertAndSend("/queue/websocket/" + message.getChatRoomid(), message);
         return message;
 
     }

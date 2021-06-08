@@ -21,8 +21,4 @@ public class ChatRoomJoinService{
         chatRoomJoinRepository.save(chatRoomJoin);
     }
 
-    public List<ChatRoomJoin> getRoomList(MemberVo user){
-        return chatRoomJoinRepository.findAllBymemberOrTarget(user, user);
-    }
-
 }

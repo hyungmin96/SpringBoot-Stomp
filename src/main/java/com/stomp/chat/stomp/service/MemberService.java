@@ -4,6 +4,7 @@ package com.stomp.chat.stomp.service;
 import com.stomp.chat.stomp.model.MemberVo;
 import com.stomp.chat.stomp.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -32,7 +33,10 @@ public class MemberService implements UserDetailsService{
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         MemberVo user = memberRepository.findByUsername(username);
-        return user;
+        if(user != null)
+            return user;
+        else
+            return new MemberVo();
     }
 
 }

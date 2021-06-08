@@ -1,8 +1,11 @@
 package com.stomp.chat.stomp.controller;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import com.stomp.chat.stomp.components.CheckChatRoomDuplicated;
+import com.stomp.chat.stomp.dto.classfyTargetAndUserDTO;
 import com.stomp.chat.stomp.dto.notificationDTO;
 import com.stomp.chat.stomp.model.ChatVo;
 import com.stomp.chat.stomp.model.MemberVo;
@@ -13,6 +16,7 @@ import com.stomp.chat.stomp.service.MemberService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,6 +44,30 @@ public class ApiController {
     @Autowired
     private ChatService chatService;
     
+    @GetMapping("/chat/rooms")
+    public List<classfyTargetAndUserDTO> getChatRooms(@AuthenticationPrincipal UserDetails principal){
+
+        MemberVo user = (MemberVo) principal;
+
+        List<ChatRoomJoin> roomList = chatRoomJoinService.getRooms(user);
+        List<classfyTargetAndUserDTO> chatRoomList = new ArrayList<>();
+
+        roomList.forEach(action -> {
+            classfyTargetAndUserDTO classfy = new classfyTargetAndUserDTO();
+            classfy.setRoomId(action.getChatRoomVo().getId());
+            classfy.setChatRoomJoin(action);
+
+            if(action.getTarget().equals(user))
+                classfy.setTarget(action.getMember().getUsername());
+            else
+                classfy.setTarget(action.getTarget().getUsername());
+            
+            chatRoomList.add(classfy);
+        });
+        
+        return chatRoomList;
+    }
+
     @GetMapping("/chat/chats/")
     public Page<ChatVo> getChatList(@RequestParam Long roomId, @RequestParam int display, @RequestParam int page){
         Page<ChatVo> chatList = chatService.getChatContent(page, display, roomId);

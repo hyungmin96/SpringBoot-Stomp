@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ChatRoomRepository extends JpaRepository<ChatRoomVo, Long>{
     public ChatRoomVo findById(long roomId);
+    public ChatRoomVo findLast1Byid(long roomId);
 }
