@@ -1,8 +1,6 @@
 package com.stomp.chat.stomp.controller;
 
-import com.stomp.chat.stomp.service.ChatService;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -13,9 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Controller
 public class SiteController {
     
-    @Autowired
-    private ChatService chatService;
-
     @GetMapping("/")
     public String home(@AuthenticationPrincipal UserDetails principal){
         return "/createRoom/chatRoomList";

@@ -2,16 +2,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="../common/header.jsp"%>
 
-        <sec:authorize access="isAuthenticated()">
-            <sec:authentication property="principal" var="principal" />
-        </sec:authorize>
+
 
 <link rel="stylesheet" type="text/css" href="/css/chatRoomList.css">
 
 <div class="container">
 
-    <h2><span class="user__name__info">${principal.username}</span></h2>
-    <span style="color: rgb(160, 160, 160);">님의 채팅내역 입니다.</span>
+    <div class="user__chat" style="display: inline-flex;">
+        <h2><span class="user__name__info">${principal.username}</span></h2>
+        <span style="margin-left: 5px; margin-top: 30px; color: rgb(160, 160, 160);">님의 채팅내역 입니다.</span>
+    </div>
 
     <hr style="margin-top: 10px; margin-bottom: 10px;"/>
         <div class="roomsContainer">

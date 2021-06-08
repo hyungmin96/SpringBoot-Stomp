@@ -17,7 +17,6 @@
                 <div class="message__container">
                     <li class="chat__list">
 
-
                     </li>
                 </div>
             </ul>
@@ -61,13 +60,20 @@ function loadChatData(){
         success: function(response){
             
             let currentScrollTop = $('.chat__log')[0].scrollHeight;
+            let dateTrigger = null;
 
             $.each(response.content, function(key, value){
+
+                var time = new Date(Date.parse(value.time)).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+                
+                var monthANDdat = new Date(value.time).getMonth() + new Date(value.time).getDate();
+
                 if($('.room__targetId').text() != value.member.username)
                 // 로그인한 사용자가 보낸 채팅
                     $(".chat__list").prepend(
                         "<div class='user__send'>" + 
                         "<span class='chat__message'>" + value.content + "</span>" + 
+                        "<span class='chat__time'>" + time + "</span>" +
                         "</div>"
                     );
                 else
@@ -76,8 +82,19 @@ function loadChatData(){
                         "<div class='target__send'>" + 
                             "<span class='nickname'>" + value.member.username + "</span>" +
                             "<span class='chat__message'>" + value.content + "</span>" +
+                            "<span class='chat__time'>" + time + "</span>" +
                         "</div>"
                     );
+
+                    if(dateTrigger != monthANDdat){
+                        dateTrigger = monthANDdat
+                        $(".chat__list").prepend(
+                            "<span class='date__box'>" +
+                            (new Date(value.time).getMonth() + 1) + '월 ' +
+                            new Date(value.time).getDate() + '일' +
+                            "</span>"
+                        )
+                    }
             })
 
             let atferScrollTop = $('.chat__log')[0].scrollHeight;

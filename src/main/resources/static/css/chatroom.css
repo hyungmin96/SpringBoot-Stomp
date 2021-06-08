@@ -79,8 +79,9 @@ ul{
     display: flex;
     flex-direction: column;
     max-width: 180px;
-    margin-left: auto;
     word-break: break-all;
+    border-radius: 5px;
+    margin-left: auto;
 }
 
 .target__send{
@@ -97,6 +98,7 @@ ul{
     max-width: 180px;
     margin-right: auto;
     word-break: break-all;
+    border-radius: 5px;
 }
 
 .chat__send{
@@ -104,8 +106,22 @@ ul{
 }
 
 .message__container{
-    margin: 15px 5px;
+    margin: 10px 5px;
     width: 100%;
+}
+
+.chat__list{
+    display: flex;
+    flex-direction: column;
+}
+
+.chat__list .date__box{
+    background-color: rgb(231, 231, 231);
+    margin: auto auto;
+    padding: 3px;
+    width: 170px;
+    text-align: center;
+    border-radius: 5px;
 }
 
 .chat__content__send{
@@ -115,4 +131,19 @@ ul{
     padding: 10px;
     width: 100%;
     height: 30px;
+}
+
+.chat__time{
+    font-size: 12px;
+    color: #8a8a8a;
+    position: relative;
+}
+
+.user__send .chat__time{
+    position: relative;
+    margin-left: auto;
+}
+
+.target__send .chat__time{
+    margin-left: 10px;
 }
