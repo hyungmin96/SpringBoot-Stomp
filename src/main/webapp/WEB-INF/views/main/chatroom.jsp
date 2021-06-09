@@ -33,6 +33,7 @@
 
 var flag = false;
 var page = 0;
+var previousDate = null;
 
 $(document).ready(function(){
     loadChatData();
@@ -49,8 +50,10 @@ $('.chat__log').scroll(function(){
 
 function loadChatData(){
     
-    var display = 10;
+    var display = 15;
     var roomId = $('.data__roomId')[0].dataset.chatroom;
+    
+    var dateArr = [];
 
     $.ajax({
         url: '/api/chat/chats/',
@@ -61,13 +64,26 @@ function loadChatData(){
             
             let currentScrollTop = $('.chat__log')[0].scrollHeight;
 
-                var displayDate = true;
-
                 $.each(response, function(idx, item){
                     
+                    idx = idx.split('T')[0];
+
+                    if(previousDate == null)
+                        previousDate = idx;
+
                     $.each(item, function(key, value){
 
                         var time = new Date(Date.parse(value.time)).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+                        
+                        if(previousDate != idx){
+                            $(".chat__list").prepend(
+                                "<span class='date__box'>" +
+                                (new Date(previousDate).getMonth() + 1) + '월 ' +
+                                new Date(previousDate).getDate() + '일' +
+                                "</span>"
+                            )
+                            previousDate = idx;
+                        }
 
                         if($('.room__targetId').text() != value.member.username)
                         // 로그인한 사용자가 보낸 채팅
@@ -88,16 +104,6 @@ function loadChatData(){
                         );      
 
                     })
-
-                    if(displayDate == true && response[idx].length < display){
-                        $(".chat__list").prepend(
-                            "<span class='date__box'>" +
-                            (new Date(idx).getMonth() + 1) + '월 ' +
-                            new Date(idx).getDate() + '일' +
-                            "</span>"
-                        )
-                        displayDate = false;
-                    }
 
                 })
 
