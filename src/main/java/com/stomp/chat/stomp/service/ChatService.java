@@ -1,5 +1,11 @@
 package com.stomp.chat.stomp.service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.stomp.chat.stomp.model.ChatRoomVo;
 import com.stomp.chat.stomp.model.ChatVo;
 import com.stomp.chat.stomp.repository.ChatRepository;
@@ -23,14 +29,28 @@ public class ChatService {
         chatRepository.save(chatVo);
     }
 
-    public Page<ChatVo> getChatContent(int page, int display, long roomId){
+    public Map<LocalDate, List<ChatVo>> getChatContent(int page, int display, long roomId){
         
         PageRequest request = PageRequest.of(page, display, Sort.Direction.DESC, "id");
         ChatRoomVo chatRoomVo = chatRoomRepository.findById(roomId);
         
         Page<ChatVo> chattings = chatRepository.findAllBychatRoomVo(chatRoomVo, request);
 
-        return chattings;
+        Map<LocalDate, List<ChatVo>> dateSet = new HashMap<>();
+
+        chattings.forEach(action -> {
+            dateSet.put(action.getTime().toLocalDate(), new ArrayList<ChatVo>());
+        });
+
+        dateSet.forEach((key, value) -> {
+            chattings.forEach(action -> {
+                if(key.equals(action.getTime().toLocalDate())){
+                    value.add(action);
+                }
+            });
+        });
+        
+        return dateSet;
 
     }
 

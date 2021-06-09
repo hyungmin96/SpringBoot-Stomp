@@ -1,8 +1,10 @@
 package com.stomp.chat.stomp.controller;
 
+
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import com.stomp.chat.stomp.components.CheckChatRoomDuplicated;
 import com.stomp.chat.stomp.dto.classfyTargetAndUserDTO;
@@ -69,9 +71,11 @@ public class ApiController {
     }
 
     @GetMapping("/chat/chats/")
-    public Page<ChatVo> getChatList(@RequestParam Long roomId, @RequestParam int display, @RequestParam int page){
-        Page<ChatVo> chatList = chatService.getChatContent(page, display, roomId);
+    public Map<LocalDate, List<ChatVo>> getChatList(@RequestParam Long roomId, @RequestParam int display, @RequestParam int page){
+    
+        Map<LocalDate, List<ChatVo>> chatList = chatService.getChatContent(page, display, roomId);
         return chatList;
+
     }
 
     @PostMapping("/create/chatroom")

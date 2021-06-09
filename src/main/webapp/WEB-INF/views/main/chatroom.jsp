@@ -49,7 +49,7 @@ $('.chat__log').scroll(function(){
 
 function loadChatData(){
     
-    var display = 20;
+    var display = 10;
     var roomId = $('.data__roomId')[0].dataset.chatroom;
 
     $.ajax({
@@ -60,42 +60,46 @@ function loadChatData(){
         success: function(response){
             
             let currentScrollTop = $('.chat__log')[0].scrollHeight;
-            let dateTrigger = null;
 
-            $.each(response.content, function(key, value){
+                var displayDate = true;
 
-                var time = new Date(Date.parse(value.time)).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
-                
-                var monthANDdat = new Date(value.time).getMonth() + new Date(value.time).getDate();
+                $.each(response, function(idx, item){
+                    
+                    $.each(item, function(key, value){
 
-                if($('.room__targetId').text() != value.member.username)
-                // 로그인한 사용자가 보낸 채팅
-                    $(".chat__list").prepend(
-                        "<div class='user__send'>" + 
-                        "<span class='chat__message'>" + value.content + "</span>" + 
-                        "<span class='chat__time'>" + time + "</span>" +
-                        "</div>"
-                    );
-                else
-                // 상대 사용자가 보낸 채팅
-                    $(".chat__list").prepend(
-                        "<div class='target__send'>" + 
-                            "<span class='nickname'>" + value.member.username + "</span>" +
-                            "<span class='chat__message'>" + value.content + "</span>" +
+                        var time = new Date(Date.parse(value.time)).toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+
+                        if($('.room__targetId').text() != value.member.username)
+                        // 로그인한 사용자가 보낸 채팅
+                        $(".chat__list").prepend(
+                            "<div class='user__send'>" + 
+                            "<span class='chat__message'>" + value.content + "</span>" + 
                             "<span class='chat__time'>" + time + "</span>" +
-                        "</div>"
-                    );
+                            "</div>"
+                        );
+                        else
+                        // 상대 사용자가 보낸 채팅
+                        $(".chat__list").prepend(
+                            "<div class='target__send'>" + 
+                                "<span class='nickname'>" + value.member.username + "</span>" +
+                                "<span class='chat__message'>" + value.content + "</span>" +
+                                "<span class='chat__time'>" + time + "</span>" +
+                            "</div>"
+                        );      
 
-                    if(dateTrigger != monthANDdat){
-                        dateTrigger = monthANDdat
+                    })
+
+                    if(displayDate == true && response[idx].length < display){
                         $(".chat__list").prepend(
                             "<span class='date__box'>" +
-                            (new Date(value.time).getMonth() + 1) + '월 ' +
-                            new Date(value.time).getDate() + '일' +
+                            (new Date(idx).getMonth() + 1) + '월 ' +
+                            new Date(idx).getDate() + '일' +
                             "</span>"
                         )
+                        displayDate = false;
                     }
-            })
+
+                })
 
             let atferScrollTop = $('.chat__log')[0].scrollHeight;
 
@@ -104,8 +108,8 @@ function loadChatData(){
             page++;
             flag = false;
         }
-    
     })
+    
 }
 
 </script>

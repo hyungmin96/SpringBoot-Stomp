@@ -115,15 +115,6 @@ ul{
     flex-direction: column;
 }
 
-.chat__list .date__box{
-    background-color: rgb(231, 231, 231);
-    margin: auto auto;
-    padding: 3px;
-    width: 170px;
-    text-align: center;
-    border-radius: 5px;
-}
-
 .chat__content__send{
     border: 1px solid rgb(245, 245, 245);
     background-color: rgb(244, 244, 250);
@@ -146,4 +137,16 @@ ul{
 
 .target__send .chat__time{
     margin-left: 10px;
+    font-family: Noto Sans KR;
+}
+
+.date__box{
+    margin: auto auto;
+    color: rgb(189, 189, 189);
+    font-size: 15px;
+    padding: 3px;
+    width: 170px;
+    text-align: center;
+    border-radius: 5px;
+    font-family: Noto Sans KR;
 }
