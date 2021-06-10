@@ -35,6 +35,7 @@ var flag = false;
 var page = 0;
 var previousDate = null;
 var currentDisplayDate = true;
+var currentDate;
 
 $(document).ready(function(){
     loadChatData();
@@ -55,6 +56,9 @@ function loadChatData(){
     var roomId = $('.data__roomId')[0].dataset.chatroom;
     
     var dateArr = [];
+
+    if(!currentDisplayDate)
+        currentDate = dateClass[dateClass.length-1].innerHTML != (new Date().getMonth() + 1) + '월 ' + new Date().getDate() + '일'
 
     $.ajax({
         url: '/api/chat/chats/',
@@ -111,7 +115,7 @@ function loadChatData(){
 
             var dateClass = document.getElementsByClassName('date__box');
             
-            if(currentDisplayDate && dateClass[dateClass.length-1].innerHTML != (new Date().getMonth() + 1) + '월 ' + new Date().getDate() + '일'){
+            if(idx != currentDate || (currentDisplayDate && dateClass[dateClass.length-1].innerHTML != (new Date().getMonth() + 1) + '월 ' + new Date().getDate() + '일')){
 
                 $(".chat__list").append(
                     "<span class='date__box'>" +

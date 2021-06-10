@@ -38,6 +38,8 @@
                 
                 $.each(response, function(key, value){
 
+                var currentChatMessage = value.chatRoomJoin.chatRoomVo.chats;
+
                     $('.roomsContainer').append(
                         "<div class='room__box'" + 
                         "onclick='popupWindow(" + value.target + "," + value.roomId + ")'>" +
@@ -46,7 +48,7 @@
                         "</div>" +
                         "<hr style='margin: 10px;'/>" + 
                         "<div class='room_chatting'>" + 
-                        "chatting 내용" + 
+                        currentChatMessage[currentChatMessage.length-1].content + 
                         "</div>" + 
                         "</div>"
                     );
