@@ -34,6 +34,7 @@
 var flag = false;
 var page = 0;
 var previousDate = null;
+var currentDisplayDate = true;
 
 $(document).ready(function(){
     loadChatData();
@@ -50,7 +51,7 @@ $('.chat__log').scroll(function(){
 
 function loadChatData(){
     
-    var display = 15;
+    var display = 30;
     var roomId = $('.data__roomId')[0].dataset.chatroom;
     
     var dateArr = [];
@@ -87,25 +88,38 @@ function loadChatData(){
 
                         if($('.room__targetId').text() != value.member.username)
                         // 로그인한 사용자가 보낸 채팅
-                        $(".chat__list").prepend(
-                            "<div class='user__send'>" + 
-                            "<span class='chat__message'>" + value.content + "</span>" + 
-                            "<span class='chat__time'>" + time + "</span>" +
-                            "</div>"
-                        );
+                            $(".chat__list").prepend(
+                                "<div class='user__send'>" + 
+                                "<span class='chat__message'>" + value.content + "</span>" + 
+                                "<span class='chat__time'>" + time + "</span>" +
+                                "</div>"
+                            );
                         else
                         // 상대 사용자가 보낸 채팅
-                        $(".chat__list").prepend(
-                            "<div class='target__send'>" + 
-                                "<span class='nickname'>" + value.member.username + "</span>" +
-                                "<span class='chat__message'>" + value.content + "</span>" +
-                                "<span class='chat__time'>" + time + "</span>" +
-                            "</div>"
-                        );      
+                            $(".chat__list").prepend(
+                                "<div class='target__send'>" + 
+                                    "<span class='nickname'>" + value.member.username + "</span>" +
+                                    "<span class='chat__message'>" + value.content + "</span>" +
+                                    "<span class='chat__time'>" + time + "</span>" +
+                                "</div>"
+                            );      
 
                     })
 
                 })
+
+
+            var dateClass = document.getElementsByClassName('date__box');
+            
+            if(currentDisplayDate && dateClass[dateClass.length-1].innerHTML != (new Date().getMonth() + 1) + '월 ' + new Date().getDate() + '일'){
+
+                $(".chat__list").append(
+                    "<span class='date__box'>" +
+                    (new Date().getMonth() + 1) + '월 ' + new Date().getDate() + '일' +
+                    "</span>"
+                )
+                    currentDisplayDate = false;
+            }
 
             let atferScrollTop = $('.chat__log')[0].scrollHeight;
 
